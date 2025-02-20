@@ -23,6 +23,7 @@ pnpm dev
 
 ## node_modules 삭제
 
+```bash
 rm -rf node_modules
 
 ## pnpm-lock.yaml 삭제
@@ -32,3 +33,4 @@ rm pnpm-lock.yaml
 ## 의존성 다시 설치
 
 pnpm install
+```
