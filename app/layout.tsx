@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={{width: '80vw', margin: '0 auto'}}>
         <Header />
         <div className="flex min-h-screen">
           <Sidebar />
