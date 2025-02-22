@@ -1,0 +1,1 @@
+export const BASE_URL = process.env.VERCEL_ENV ? "https://v0-next-js-react-layout.vercel.app/api" : "http://localhost:3000";

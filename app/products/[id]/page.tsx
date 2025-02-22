@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/Product";
 import DifyChat from "@/app/components/DifyChat";
+import { BASE_URL } from "@/lib/request";
+
 export default async function ProductPage({
   params,
 }: {
@@ -11,7 +13,7 @@ export default async function ProductPage({
 }) {
   // In a real app, fetch product data based on params.id
   const fetched = await fetch(
-    `http://localhost:3000/api/products/${params.id}`
+    `${BASE_URL}/api/products/${params.id}`
   );
   const product: Product | null = await fetched.json();
 
