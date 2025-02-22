@@ -58,7 +58,7 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                  {product.sponsored && <div className="text-xs text-muted-foreground">Sponsored</div>}
+                  {product.sponsored ? <div className="text-xs text-muted-foreground min-h-4">Sponsored</div> : <div className="text-xs min-h-4">{" "}</div> }
                 </div>
               </CardContent>
             </Card>

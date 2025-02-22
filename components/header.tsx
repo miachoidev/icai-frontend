@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 items-center px-4">
+      <div className="flex h-24 items-center px-4">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" className="lg:hidden" size="icon">
@@ -29,7 +29,7 @@ export default function Header() {
         </Sheet>
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <Image src="/placeholder.svg" alt="Pillyze Logo" width={32} height={32} />
-          <span className="hidden font-bold sm:inline-block">Pillyze</span>
+          <span className="hidden text-3xl font-bold sm:inline-block">Health Care Bot</span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div
@@ -49,9 +49,9 @@ export default function Header() {
               />
             </div>
           </div>
-          <Button variant="default" className="hidden sm:flex">
+          {/* <Button variant="default" className="hidden sm:flex">
             App Download
-          </Button>
+          </Button> */}
         </div>
       </div>
     </header>
