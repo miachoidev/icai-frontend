@@ -26,3 +26,11 @@ export async function get_embedding(text: string) {
     return null;
   }
 }
+
+export async function get_chat_completion(messages: any[]): Promise<string> {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages,
+  });
+  return completion.choices[0].message.content!;
+}
