@@ -75,6 +75,14 @@ class MongoDBClient {
       .toArray();
     return results;
   }
+
+  async getProduct(id: string): Promise<Product | null> {
+    const collection = await this.getCollection(
+      "sample_jinho",
+      "food_collection2"
+    );
+    return collection.findOne<Product>({ _id: new ObjectId(id) });
+  }
 }
 
 export const mongoClient = new MongoDBClient();

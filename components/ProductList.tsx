@@ -36,7 +36,7 @@ export default function ProductList() {
   return (
     <>
       {products.map((product) => (
-        <Link key={product._id.toString()} href={`/product/${product._id.toString()}`}>
+        <Link key={product._id.toString()} href={`/products/${product._id.toString()}`}>
           <Card className="overflow-hidden transition-shadow hover:shadow-lg">
             <CardContent className="p-0">
           {/* <div className="aspect-square relative">
