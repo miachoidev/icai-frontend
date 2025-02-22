@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { get_embedding } from "./openai";
+import { Product } from "@/types/Product";
+
 class MongoDBClient {
   client: MongoClient;
 
@@ -55,8 +57,19 @@ class MongoDBClient {
     const results = await collection.aggregate(pipeline).toArray();
     return results;
   }
+
+  async getRecords(limit: number, afterId?: ObjectId): Promise<Product[]> {
+    const collection = await this.getCollection("sample_jinho", "food_collection2");
+    const results = await collection.find<Product>({
+      ...(afterId ? { _id: { $gt: afterId } } : {}),
+    })
+      .sort({ _id: 1 })
+      .limit(limit)
+      .toArray();
+    return results;
+  }
 }
 
-const client = new MongoDBClient();
+export const mongoClient = new MongoDBClient();
 
 // client.vector_search("몸에 좋은 비타민이 들어간 건강한 음식").then((res) => console.log(res));
