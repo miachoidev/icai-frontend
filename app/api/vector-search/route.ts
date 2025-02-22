@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { clientPromise } from "@/lib/mongodb";
+import { clientPromise } from "@/lib/mongodb-client";
 import { get_embedding } from "@/lib/openai";
 
 export async function POST(req: Request) {
