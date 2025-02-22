@@ -1,10 +1,8 @@
-import { Star } from "lucide-react";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Product } from "@/types/Product";
 import DifyChat from "@/app/components/DifyChat";
+import DifyChatButton from "@/components/DifyChatButton";
+import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/lib/request";
+import { Product } from "@/types/Product";
 
 export default async function ProductPage({
   params,
@@ -52,21 +50,7 @@ export default async function ProductPage({
           </div> */}
           <p className="text-muted-foreground">{product.BASE_STANDARD}</p>
           <div className="space-y-2">
-            <Button
-              className="w-full"
-              size="lg"
-              onClick={() => {
-                // 챗봇 버튼 클릭 시 Dify 챗봇 창 열기
-                const chatButton = document.querySelector(
-                  "#dify-chatbot-bubble-button"
-                ) as HTMLElement;
-                if (chatButton) {
-                  chatButton.click();
-                }
-              }}
-            >
-              챗봇과 대화하기
-            </Button>
+            <DifyChatButton />
             <Button className="w-full" variant="outline" size="lg">
               리플 의사
             </Button>
