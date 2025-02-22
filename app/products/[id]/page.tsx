@@ -1,5 +1,3 @@
-import DifyChat from "@/app/components/DifyChat";
-import DifyChatButton from "@/components/DifyChatButton";
 import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/lib/request";
 import { Product } from "@/types/Product";
@@ -48,7 +46,6 @@ export default async function ProductPage({
           </div> */}
           <p className="text-muted-foreground">{product.BASE_STANDARD}</p>
           <div className="space-y-2">
-            {/* <DifyChatButton /> */}
             <Button className="w-full" variant="outline" size="lg">
               리플 의사
             </Button>
@@ -58,7 +55,6 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
-      {/* <DifyChat /> */}
     </div>
   );
 }
