@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/Product";
-
+import DifyChat from "@/app/components/DifyChat";
 export default async function ProductPage({
   params,
 }: {
@@ -50,7 +50,19 @@ export default async function ProductPage({
           </div> */}
           <p className="text-muted-foreground">{product.BASE_STANDARD}</p>
           <div className="space-y-2">
-            <Button className="w-full" size="lg">
+            <Button
+              className="w-full"
+              size="lg"
+              onClick={() => {
+                // 챗봇 버튼 클릭 시 Dify 챗봇 창 열기
+                const chatButton = document.querySelector(
+                  "#dify-chatbot-bubble-button"
+                ) as HTMLElement;
+                if (chatButton) {
+                  chatButton.click();
+                }
+              }}
+            >
               챗봇과 대화하기
             </Button>
             <Button className="w-full" variant="outline" size="lg">
@@ -62,6 +74,7 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
+      <DifyChat />
     </div>
   );
 }
