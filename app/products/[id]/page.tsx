@@ -10,9 +10,7 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   // In a real app, fetch product data based on params.id
-  const fetched = await fetch(
-    `${BASE_URL}/api/products/${params.id}`
-  );
+  const fetched = await fetch(`${BASE_URL}/api/products/${params.id}`);
   const product: Product | null = await fetched.json();
 
   if (!product) {
@@ -50,7 +48,7 @@ export default async function ProductPage({
           </div> */}
           <p className="text-muted-foreground">{product.BASE_STANDARD}</p>
           <div className="space-y-2">
-            <DifyChatButton />
+            {/* <DifyChatButton /> */}
             <Button className="w-full" variant="outline" size="lg">
               리플 의사
             </Button>
@@ -60,7 +58,7 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
-      <DifyChat />
+      {/* <DifyChat /> */}
     </div>
   );
 }
