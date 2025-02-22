@@ -22,9 +22,9 @@ export default function ProductList() {
   const { ref, inView } = useInView();
 
   const loadProducts = async () => {
-    const products = await getProducts(lastId);
-    setProducts(products);
-    setLastId(products[products.length - 1]._id);
+    const productsCalled = await getProducts(lastId);
+    setProducts([...products, ...productsCalled]);
+    setLastId(productsCalled[productsCalled.length - 1]._id);
   };
 
   useEffect(() => {
