@@ -1,11 +1,11 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Header from "@/components/header"
-import Sidebar from "@/components/sidebar"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pick & Chat",
@@ -16,11 +16,43 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{width: '80vw', margin: '0 auto'}}>
+      <head>
+        {/* Dify 설정 스크립트 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.difyChatbotConfig = {
+                token: 'BqyHPFOXfJ5Mm6zI'
+              }
+            `,
+          }}
+        />
+
+        {/* Dify 임베드 스크립트 */}
+        <script
+          src="https://udify.app/embed.min.js"
+          id="BqyHPFOXfJ5Mm6zI"
+          defer
+        />
+
+        {/* Dify 스타일 */}
+        <style>
+          {`
+            #dify-chatbot-bubble-button {
+              background-color: #1C64F2 !important;
+            }
+            #dify-chatbot-bubble-window {
+              width: 24rem !important;
+              height: 40rem !important;
+            }
+          `}
+        </style>
+      </head>
+      <body className={inter.className}>
         <Header />
         <div className="flex min-h-screen">
           <Sidebar />
@@ -28,9 +60,7 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }
 
-
-
-import './globals.css'
+import "./globals.css";

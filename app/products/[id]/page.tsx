@@ -1,53 +1,51 @@
-import { Star } from "lucide-react"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { BASE_URL } from "@/lib/request";
+import { Product } from "@/types/Product";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   // In a real app, fetch product data based on params.id
-  const product = {
-    id: 1,
-    name: "살펜다 혈당컷 다이어트",
-    brand: "한국건강",
-    rating: 4.51,
-    reviews: 139,
-    image: "/placeholder.svg",
-    tags: ["단백질 대사", "체지방 감소"],
-    description: "만족 수 있는 브랜드 스토어에서",
+  const fetched = await fetch(`${BASE_URL}/api/products/${params.id}`);
+  const product: Product | null = await fetched.json();
+
+  if (!product) {
+    return <div>Product not found</div>;
   }
 
   return (
     <div className="container mx-auto px-4">
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="space-y-4">
-          <div className="aspect-square relative overflow-hidden rounded-lg border">
+          {/* <div className="aspect-square relative overflow-hidden rounded-lg border">
             <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
-          </div>
+          </div> */}
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
-            <div className="text-sm text-muted-foreground">{product.brand}</div>
-            <h1 className="text-3xl font-bold">{product.name}</h1>
-            <div className="flex items-center gap-2">
+            <div className="text-sm text-muted-foreground">
+              {product.ENTRPS}
+            </div>
+            <h1 className="text-3xl font-bold">{product.PRDUCT}</h1>
+            {/* <div className="flex items-center gap-2">
               <div className="flex items-center">
                 <Star className="h-5 w-5 fill-primary text-primary" />
                 <span className="ml-1 font-medium">{product.rating}</span>
               </div>
               <span className="text-sm text-muted-foreground">{product.reviews} reviews</span>
-            </div>
+            </div> */}
           </div>
-          <div className="flex flex-wrap gap-2">
+          {/* <div className="flex flex-wrap gap-2">
             {product.tags.map((tag) => (
               <Badge key={tag} variant="secondary">
                 {tag}
               </Badge>
             ))}
-          </div>
-          <p className="text-muted-foreground">{product.description}</p>
+          </div> */}
+          <p className="text-muted-foreground">{product.BASE_STANDARD}</p>
           <div className="space-y-2">
-            <Button className="w-full" size="lg">
-              챗봇과 대화하기
-            </Button>
             <Button className="w-full" variant="outline" size="lg">
               리플 의사
             </Button>
@@ -58,6 +56,5 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
