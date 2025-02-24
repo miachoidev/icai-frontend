@@ -7,3 +7,9 @@ export interface Product {
   ENTRPS: string;
   price: number;
 }
+
+export interface Vecotr {
+  _id: ObjectId;
+  PRDUCT: string;
+  ENTRPS: string;
+}

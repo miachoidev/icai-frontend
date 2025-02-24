@@ -29,7 +29,7 @@ export default function Header() {
         </Sheet>
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <Image src="/placeholder.svg" alt="Pillyze Logo" width={32} height={32} />
-          <span className="hidden text-3xl font-bold sm:inline-block">Health Care Bot</span>
+          <span className="hidden text-3xl font-bold sm:inline-block">Pick & Chat</span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div
