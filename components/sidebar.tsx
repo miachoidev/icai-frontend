@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown, Home, Pill, ShoppingBag, Star, HelpCircle } from "lucide-react"
+import { ChevronDown, Home, Pill, Star, HelpCircle,Atom } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -12,24 +12,45 @@ const sidebarNavItems = [
     icon: Home,
     href: "/",
   },
+  // {
+  //   title: "Products",
+  //   icon: ShoppingBag,
+  //   href: "/products",
+  // },
+  // {
+  //   title: "Pillyze Store",
+  //   icon: Pill,
+  //   href: "/store",
+  // },
   {
-    title: "Products",
-    icon: ShoppingBag,
-    href: "/products",
-  },
-  {
-    title: "Pillyze Store",
-    icon: Pill,
-    href: "/store",
-  },
-  {
-    title: "Supplement Search",
+    title: "다이어트 (체중관리)",
     icon: Star,
-    href: "/search",
+    href: "",
     children: [
-      { title: "By Ingredient", href: "/search/ingredient" },
-      { title: "By Effect", href: "/search/effect" },
-      { title: "By Brand", href: "/search/brand" },
+      { title: "다이어트", href: "/search/diet" },
+      { title: "슬리밍", href: "/search/slimming" },
+      { title: "슬림", href: "/search/slim" },
+      { title: "칼로리", href: "/search/kcal" },
+    ],
+  },
+  {
+    title: "식품 & 보충제",
+    icon: Pill,
+    href: "",
+    children: [
+      { title: "닭가슴살", href: "/search/chiken" },
+      { title: "쉐이크", href: "/search/shake" },
+      { title: "곤약", href: "/search/gonyak" },
+      { title: "프로틴", href: "/search/protein" },
+    ],
+  },
+  {
+    title: "영양소",
+    icon: Atom,
+    href: "",
+    children: [
+      { title: "아르기닌", href: "/search/arginine" },
+      { title: "효소", href: "/search/enzyme" },
     ],
   },
   {

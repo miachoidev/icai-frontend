@@ -8,10 +8,10 @@ import Sidebar from "@/components/sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Pillyze - Supplement Store",
-  description: "Find the right supplements for your needs",
-  generator: "v0.dev",
-};
+  title: "Pick & Chat",
+  description: "Pick the products and Chat",
+    generator: 'v1.dev'
+}
 
 export default function RootLayout({
   children,

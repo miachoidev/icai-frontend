@@ -11,3 +11,9 @@ export interface Product {
   SUNGSANG: string;
   price: number;
 }
+
+export interface Vecotr {
+  _id: ObjectId;
+  PRDUCT: string;
+  ENTRPS: string;
+}
