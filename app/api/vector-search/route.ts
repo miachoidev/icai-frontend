@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { clientPromise } from "@/lib/mongodb-client";
 import { get_embedding } from "@/lib/openai";
-
+//dify 벡터 검색 도구
 export async function POST(req: Request) {
   try {
     const { query } = await req.json();

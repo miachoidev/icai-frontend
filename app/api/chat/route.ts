@@ -1,12 +1,11 @@
 import { OpenAI } from "openai";
 import { NextResponse } from "next/server";
 import { clientPromise } from "@/lib/mongodb-client";
-
+//이거 안씀
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// 웹 검색 함수
 async function searchWeb(query: string) {
   const url = "https://google.serper.dev/search";
   const response = await fetch(url, {
@@ -24,7 +23,6 @@ async function searchWeb(query: string) {
   return response.json();
 }
 
-// 유사 제품 검색 함수
 async function findSimilarProducts(productName: string) {
   const client = await clientPromise;
   const db = client.db("sample_jinho");
