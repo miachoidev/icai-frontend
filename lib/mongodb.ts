@@ -7,7 +7,7 @@ import { get_embedding } from "./openai";
 import { Product } from "@/types/Product";
 
 const productImages = {
-  '곤약': ['곤약1.jpg', '곤약2.JPG', '곤약3.JPG', '곤약4.JPG', '곤약5.JPG', '곤약6.JPG', '곤약7.JPG', '곤약8.JPG', '곤약9.JPG', '곤약10.JPG'],
+  '곤약': ['곤약1.jpg', '곤약2.JPG', '곤약3.JPG', '곤약4.JPG', '곤약5.JPG', '곤약6.JPG', '곤약7.JPG', '곤약8.JPG', '곤약9.JPG', '곤약10.jpg'],
   '다이어트': ['다이어트1.jpg', '다이어트2.jpeg', '다이어트3.avif', '다이어트4.png', '다이어트5.jpg', '다이어트6.jpg', '다이어트7.jpg', '다이어트8.avif', '다이어트9.jpg', '다이어트10.jpg'],
   '닭가슴살': ['닭가슴살1.jpg', '닭가슴살2.jpg', '닭가슴살3.jpg', '닭가슴살4.jpg', '닭가슴살5.jpg', '닭가슴살6.JPG', '닭가슴살7.JPG', '닭가슴살8.JPG', '닭가슴살9.JPG', '닭가슴살10.JPG'],
   '쉐이크': ['쉐이크1.jpg', '쉐이크2.png', '쉐이크3.jpeg', '쉐이크4.jpeg', '쉐이크5.jpeg', '쉐이크6.jpeg', '쉐이크7.jpg', '쉐이크8.JPG', '쉐이크9.JPG', '쉐이크10.JPG'],
