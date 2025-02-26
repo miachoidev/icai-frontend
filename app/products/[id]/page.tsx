@@ -2,14 +2,13 @@
 
 import { BASE_URL } from "@/lib/request";
 import { Product } from "@/types/Product";
-import ChatInterface from "@/app/components/ChatInterface";
-import ProductActions from "@/app/components/ProductActions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
+import { ProductContext } from "./layout";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  const [showChat, setShowChat] = useState(false);
+  const { setProductInfo } = useContext(ProductContext);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,8 +17,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       try {
         const fetched = await fetch(`${BASE_URL}/api/products/${params.id}`);
         const data = await fetched.json();
-        console.log("data::::", data);
         setProduct(data);
+        setProductInfo(data);
       } catch (error) {
         console.error("Failed to fetch product:", error);
       } finally {
@@ -28,7 +27,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     };
 
     fetchProduct();
-  }, [params.id]);
+  }, [params.id, setProductInfo]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -58,31 +57,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* 우측 챗봇 버튼들 - 위치 및 스타일 수정 */}
-        <div className="fixed top-32 right-8 flex flex-col gap-6">
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity overflow-hidden"
-          >
-            <Image
-              src="/fit.jpeg"
-              alt="Fitbly Chat"
-              width={80}
-              height={80}
-              className="object-cover"
-            />
-          </button>
-          <button className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity overflow-hidden">
-            <Image
-              src="/suncity.jpg"
-              alt="Suncity Chat"
-              width={80}
-              height={80}
-              className="object-cover"
-            />
-          </button>
         </div>
 
         {/* 탭 섹션 */}
@@ -143,13 +117,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
           </TabsContent>
         </Tabs>
-
-        {showChat && (
-          <ChatInterface
-            productInfo={product}
-            onClose={() => setShowChat(false)}
-          />
-        )}
       </div>
     </div>
   );

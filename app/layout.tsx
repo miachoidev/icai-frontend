@@ -10,8 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Pick & Chat",
   description: "Pick the products and Chat",
-    generator: 'v1.dev'
-}
+  generator: "v1.dev",
+};
 
 export default function RootLayout({
   children,
@@ -20,38 +20,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* Dify 설정 스크립트 */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.difyChatbotConfig = {
-                token: 'BqyHPFOXfJ5Mm6zI'
-              }
-            `,
-          }}
-        />
-
-        {/* Dify 임베드 스크립트 */}
-        <script
-          src="https://udify.app/embed.min.js"
-          id="BqyHPFOXfJ5Mm6zI"
-          defer
-        />
-
-        {/* Dify 스타일 */}
-        <style>
-          {`
-            #dify-chatbot-bubble-button {
-              background-color: #1C64F2 !important;
-            }
-            #dify-chatbot-bubble-window {
-              width: 24rem !important;
-              height: 40rem !important;
-            }
-          `}
-        </style>
-      </head>
       <body className={inter.className}>
         <Header />
         <div className="flex min-h-screen">
