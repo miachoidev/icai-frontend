@@ -45,7 +45,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <div className="flex gap-6">
             {/* 왼쪽 이미지 */}
             <div className="w-40 h-40 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <div className="text-gray-400">제품 이미지</div>
+                <Image src={product.image} alt={product.PRODUCT} width={120} height={120} className="object-cover" />
             </div>
             {/* 오른쪽 제품 정보 */}
             <div className="flex-grow">
