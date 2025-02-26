@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
 async function getProducts(afterId?: ObjectId) {
   const limit = 20
@@ -39,12 +40,12 @@ export default function ProductList() {
         <Link key={product._id.toString()} href={`/products/${product._id.toString()}`}>
           <Card className="overflow-hidden transition-shadow hover:shadow-lg">
             <CardContent className="p-0">
-          {/* <div className="aspect-square relative">
-            <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
-          </div> */}
+          <div className="aspect-square relative">
+            <Image src={product.image} alt={product.PRODUCT} fill className="object-cover" />
+          </div>
           <div className="p-4 space-y-2">
             <div className="text-sm text-muted-foreground">{product.ENTRPS}</div>
-            <h3 className="font-medium leading-tight">{product.PRDUCT}</h3>
+            <h3 className="font-medium leading-tight">{product.PRODUCT}</h3>
             {/* <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-primary text-primary" />
               <span className="font-medium">{product.rating}</span>
