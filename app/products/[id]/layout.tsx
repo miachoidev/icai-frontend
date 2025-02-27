@@ -4,6 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
+// Window 타입 확장
+declare global {
+  interface Window {
+    difyChatbotConfig?: any;
+  }
+}
+
 // Context를 만들어서 제품 정보를 공유
 export const ProductContext = React.createContext<any>(null);
 
@@ -28,13 +35,13 @@ export default function ProductDetailLayout({
       const initScript = document.createElement("script");
       initScript.textContent = `
         window.difyChatbotConfig = {
-          token: 'S7JmuUZnFTImhxPE',
+          token: 'sOdLG3fHDRrpvfzR',
           baseUrl: 'https://2a45-58-143-233-101.ngrok-free.app',
           // token: 's2Hjhgw41tGStjAY',
           dynamicScript: true,
           inputs: {
             product : '${productInfoString}'
-            },
+          }
         };
       `;
       document.head.appendChild(initScript);
@@ -42,7 +49,7 @@ export default function ProductDetailLayout({
       // 그 다음 embed.min.js 로드
       setTimeout(() => {
         const embedScript = document.createElement("script");
-        embedScript.id = "S7JmuUZnFTImhxPE";
+        embedScript.id = "sOdLG3fHDRrpvfzR";
         // embedScript.src = "https://udify.app/embed.min.js";
         embedScript.src =
           "https://2a45-58-143-233-101.ngrok-free.app/embed.min.js";
