@@ -28,7 +28,8 @@ export default function ProductDetailLayout({
       const initScript = document.createElement("script");
       initScript.textContent = `
         window.difyChatbotConfig = {
-          token: 'BqyHPFOXfJ5Mm6zI',
+          token: 'S7JmuUZnFTImhxPE',
+          baseUrl: 'http://2a45-58-143-233-101.ngrok-free.app',
           // token: 's2Hjhgw41tGStjAY',
           dynamicScript: true,
           inputs: {
@@ -41,8 +42,10 @@ export default function ProductDetailLayout({
       // 그 다음 embed.min.js 로드
       setTimeout(() => {
         const embedScript = document.createElement("script");
-        embedScript.id = "BqyHPFOXfJ5Mm6zI";
-        embedScript.src = "https://udify.app/embed.min.js";
+        embedScript.id = "S7JmuUZnFTImhxPE";
+        // embedScript.src = "https://udify.app/embed.min.js";
+        embedScript.src =
+          "http://2a45-58-143-233-101.ngrok-free.app/embed.min.js";
         document.body.appendChild(embedScript);
       }, 100); // config가 설정된 후 스크립트 로드
     }
