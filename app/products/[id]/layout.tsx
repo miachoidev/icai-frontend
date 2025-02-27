@@ -29,7 +29,7 @@ export default function ProductDetailLayout({
       initScript.textContent = `
         window.difyChatbotConfig = {
           token: 'S7JmuUZnFTImhxPE',
-          baseUrl: 'http://2a45-58-143-233-101.ngrok-free.app',
+          baseUrl: 'https://2a45-58-143-233-101.ngrok-free.app',
           // token: 's2Hjhgw41tGStjAY',
           dynamicScript: true,
           inputs: {
@@ -45,7 +45,7 @@ export default function ProductDetailLayout({
         embedScript.id = "S7JmuUZnFTImhxPE";
         // embedScript.src = "https://udify.app/embed.min.js";
         embedScript.src =
-          "http://2a45-58-143-233-101.ngrok-free.app/embed.min.js";
+          "https://2a45-58-143-233-101.ngrok-free.app/embed.min.js";
         document.body.appendChild(embedScript);
       }, 100); // config가 설정된 후 스크립트 로드
     }
