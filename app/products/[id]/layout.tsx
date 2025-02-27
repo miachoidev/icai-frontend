@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import { DifyChatButton } from "@/components/DifyChatButton";
 
 // Window 타입 확장
 declare global {
@@ -23,55 +23,25 @@ export default function ProductDetailLayout({
   const pathname = usePathname();
   const isProductDetail = pathname?.startsWith("/products/");
 
-  useEffect(() => {
-    if (isProductDetail && productInfo) {
-      // embedded, STTEMNT_NO, _id, REGIST_DT 키를 제외한 새로운 객체 생성
-      const { embedded, STTEMNT_NO, _id, REGIST_DT, ...productInfoFiltered } =
-        productInfo;
-
-      // 객체를 문자열로 변환
-      const productInfoString = JSON.stringify(productInfoFiltered);
-      // 먼저 config를 설정
-      const initScript = document.createElement("script");
-      initScript.textContent = `
-        window.difyChatbotConfig = {
-          token: 'sOdLG3fHDRrpvfzR',
-          baseUrl: 'https://2a45-58-143-233-101.ngrok-free.app',
-          // token: 's2Hjhgw41tGStjAY',
-          dynamicScript: true,
-          inputs: {
-            product : '${productInfoString}'
-          }
-        };
-      `;
-      document.head.appendChild(initScript);
-
-      // 그 다음 embed.min.js 로드
-      setTimeout(() => {
-        const embedScript = document.createElement("script");
-        embedScript.id = "sOdLG3fHDRrpvfzR";
-        // embedScript.src = "https://udify.app/embed.min.js";
-        embedScript.src =
-          "https://2a45-58-143-233-101.ngrok-free.app/embed.min.js";
-        document.body.appendChild(embedScript);
-      }, 100); // config가 설정된 후 스크립트 로드
-    }
-
-    return () => {
-      // cleanup
-      const elements = document.querySelectorAll(
-        "script, #dify-chatbot-bubble-button"
-      );
-      elements.forEach((element) => element.remove());
-      if (window.difyChatbotConfig) {
-        delete window.difyChatbotConfig;
-      }
-    };
-  }, [isProductDetail, productInfo]);
-
   return (
     <ProductContext.Provider value={{ productInfo, setProductInfo }}>
       {children}
+      {isProductDetail && productInfo && (
+        <>
+          <DifyChatButton
+            chatbotId="1lxNf1pXyzXJunTv"
+            imagePath="/suncity.jpg"
+            imageAlt="일반 문의"
+            tooltipText="키토 전문가 썬시티5스타에게 물어보세요"
+          />
+          <DifyChatButton
+            chatbotId="sOdLG3fHDRrpvfzR"
+            imagePath="/fit.jpeg"
+            imageAlt="상품 문의"
+            tooltipText="헬스/다이어트 전문가 핏블리에게 물어보세요"
+          />
+        </>
+      )}
     </ProductContext.Provider>
   );
 }
