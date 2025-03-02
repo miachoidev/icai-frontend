@@ -46,7 +46,7 @@ const DifyChatModal = ({
 
     // console.log("encodedValue:", encodedValue);
 
-    const iframeUrl = `http://5310-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
+    const iframeUrl = `https://5310-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
     console.log("final URL:", iframeUrl);
 
     return (
