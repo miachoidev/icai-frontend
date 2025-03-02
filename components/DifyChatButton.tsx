@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import pako from "pako";
 
 interface DifyChatModalProps {
   isOpen: boolean;
   onClose: () => void;
   chatbotId: string;
-  inputs?: Record<string, any>;
+  inputs: string;
 }
 
 const DifyChatModal = ({
@@ -17,66 +18,84 @@ const DifyChatModal = ({
   inputs,
 }: DifyChatModalProps) => {
   if (!isOpen) return null;
+  if (!inputs) return null; // inputs가 없으면 모달을 렌더링하지 않음
 
-  // URL 파라미터로 inputs 데이터 전달
-  const queryParams = new URLSearchParams();
-  if (inputs) {
-    Object.entries(inputs).forEach(([key, value]) => {
-      // base64로 인코딩하여 전달
-      const encodedValue = btoa(encodeURIComponent(String(value)));
-      queryParams.append(key, encodedValue);
-    });
-  }
+  console.log("original inputs:", inputs);
 
-  const iframeUrl = `https://2a45-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}?${queryParams.toString()}`;
+  try {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(inputs);
 
-  // 디버깅을 위한 콘솔 로그 추가
-  console.log("Product Info:", inputs?.product);
-  console.log("Encoded URL:", iframeUrl);
+    // gzip 압축
+    const compressed = pako.gzip(data);
 
-  return (
-    <div
-      style={{
-        position: "fixed",
-        right: "20px",
-        bottom: "20px",
-        width: "500px",
-        height: "700px",
-        // backgroundColor: "rgb(248 248 255)",
-        border: "1px solid #E6E9ED",
-        boxShadow: "0px 2px 10px rgba(70, 56, 147, 0.1)",
-        borderRadius: "10px",
-        zIndex: 1000,
-      }}
-    >
-      <button
-        onClick={onClose}
+    // Base64 인코딩
+    const encodedValue = btoa(
+      String.fromCharCode.apply(null, Array.from(compressed))
+    );
+    // Base64 인코딩 (안전한 방법)
+    // const encodedValue = btoa(
+    //   new Uint8Array(compressed).reduce(
+    //     (data, byte) => data + String.fromCharCode(byte),
+    //     ""
+    //   )
+    // );
+
+    // URL에서 깨지지 않도록 추가 인코딩
+    const urlSafeEncodedValue = encodeURIComponent(encodedValue);
+
+    // console.log("encodedValue:", encodedValue);
+
+    const iframeUrl = `http://5310-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
+    console.log("final URL:", iframeUrl);
+
+    return (
+      <div
         style={{
-          position: "absolute",
-          right: "5px",
-          top: "8px",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          fontSize: "24px",
-          color: "#463893",
-          zIndex: 1,
+          position: "fixed",
+          right: "20px",
+          bottom: "20px",
+          width: "500px",
+          height: "700px",
+          // backgroundColor: "rgb(248 248 255)",
+          border: "1px solid #E6E9ED",
+          boxShadow: "0px 2px 10px rgba(70, 56, 147, 0.1)",
+          borderRadius: "10px",
+          zIndex: 1000,
         }}
       >
-        ×
-      </button>
-      <iframe
-        src={iframeUrl}
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "none",
-          borderRadius: "10px",
-        }}
-        allow="microphone"
-      />
-    </div>
-  );
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            right: "5px",
+            top: "8px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "24px",
+            color: "#463893",
+            zIndex: 1,
+          }}
+        >
+          ×
+        </button>
+        <iframe
+          src={iframeUrl}
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "none",
+            borderRadius: "10px",
+          }}
+          allow="microphone"
+        />
+      </div>
+    );
+  } catch (error) {
+    console.error("Error encoding inputs:", error);
+    return null;
+  }
 };
 
 interface ChatButtonProps {
@@ -84,7 +103,8 @@ interface ChatButtonProps {
   imagePath: string;
   imageAlt: string;
   tooltipText: string;
-  inputs?: Record<string, any>;
+  inputs: string;
+  // inputs?: string;
 }
 
 export const DifyChatButton = ({
