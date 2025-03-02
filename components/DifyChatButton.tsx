@@ -7,10 +7,32 @@ interface DifyChatModalProps {
   isOpen: boolean;
   onClose: () => void;
   chatbotId: string;
+  inputs?: Record<string, any>;
 }
 
-const DifyChatModal = ({ isOpen, onClose, chatbotId }: DifyChatModalProps) => {
+const DifyChatModal = ({
+  isOpen,
+  onClose,
+  chatbotId,
+  inputs,
+}: DifyChatModalProps) => {
   if (!isOpen) return null;
+
+  // URL 파라미터로 inputs 데이터 전달
+  const queryParams = new URLSearchParams();
+  if (inputs) {
+    Object.entries(inputs).forEach(([key, value]) => {
+      // base64로 인코딩하여 전달
+      const encodedValue = btoa(encodeURIComponent(String(value)));
+      queryParams.append(key, encodedValue);
+    });
+  }
+
+  const iframeUrl = `https://2a45-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}?${queryParams.toString()}`;
+
+  // 디버깅을 위한 콘솔 로그 추가
+  console.log("Product Info:", inputs?.product);
+  console.log("Encoded URL:", iframeUrl);
 
   return (
     <div
@@ -20,7 +42,7 @@ const DifyChatModal = ({ isOpen, onClose, chatbotId }: DifyChatModalProps) => {
         bottom: "20px",
         width: "500px",
         height: "700px",
-        backgroundColor: "white",
+        // backgroundColor: "rgb(248 248 255)",
         border: "1px solid #E6E9ED",
         boxShadow: "0px 2px 10px rgba(70, 56, 147, 0.1)",
         borderRadius: "10px",
@@ -44,7 +66,7 @@ const DifyChatModal = ({ isOpen, onClose, chatbotId }: DifyChatModalProps) => {
         ×
       </button>
       <iframe
-        src={`https://2a45-58-143-233-101.ngrok-free.app/chatbot/${chatbotId}`}
+        src={iframeUrl}
         style={{
           width: "100%",
           height: "100%",
@@ -62,6 +84,7 @@ interface ChatButtonProps {
   imagePath: string;
   imageAlt: string;
   tooltipText: string;
+  inputs?: Record<string, any>;
 }
 
 export const DifyChatButton = ({
@@ -69,6 +92,7 @@ export const DifyChatButton = ({
   imagePath,
   imageAlt,
   tooltipText,
+  inputs,
 }: ChatButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
@@ -182,6 +206,7 @@ export const DifyChatButton = ({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         chatbotId={chatbotId}
+        inputs={inputs}
       />
     </>
   );
