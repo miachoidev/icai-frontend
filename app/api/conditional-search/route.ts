@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       {
         $match: matchConditions,
       },
-      { $limit: 20 },
+      { $limit: 5 },
       {
         $project: {
           PRODUCT: 1,
