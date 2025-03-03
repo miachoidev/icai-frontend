@@ -14,29 +14,31 @@ type NumericField =
   | "CHOL"
   | "price";
 
-interface SearchCondition {
-  type: "higher" | "lower";
+type ComparisonType = "higher" | "lower"; // 이상, 이하로 단순화
+
+interface NumericCondition {
+  field: NumericField;
+  type: ComparisonType;
   value: number;
 }
 
-interface SearchConditions {
-  numeric?: {
-    field: NumericField;
-    condition: SearchCondition;
-  }[];
-  ingredient?: {
-    include?: string;
-    exclude?: string;
+interface RequestBody {
+  category: string;
+  numericConditions?: NumericCondition[];
+  ingredients?: {
+    include?: string[];
+    exclude?: string[];
   };
 }
 
 export async function POST(req: Request) {
   try {
-    const { category, searchConditions } = await req.json();
+    const { category, numericConditions, ingredients }: RequestBody =
+      await req.json();
 
-    if (!category || !searchConditions) {
+    if (!category) {
       return NextResponse.json(
-        { error: "카테고리와 검색 조건이 필요합니다." },
+        { error: "카테고리는 필수 값입니다." },
         { status: 400 }
       );
     }
@@ -51,26 +53,24 @@ export async function POST(req: Request) {
     };
 
     // 숫자 필드 조건 추가
-    if (searchConditions.numeric) {
-      searchConditions.numeric.forEach(({ field, condition }) => {
+    if (numericConditions) {
+      numericConditions.forEach(({ field, type, value }) => {
         matchConditions[field] =
-          condition.type === "lower"
-            ? { $lt: condition.value }
-            : { $gt: condition.value };
+          type === "lower" ? { $lt: value } : { $gt: value };
       });
     }
 
     // 원재료 포함/제외 조건 추가
-    if (searchConditions.ingredient) {
-      if (searchConditions.ingredient.include) {
-        matchConditions.RAWMTRL_NM = new RegExp(
-          searchConditions.ingredient.include,
-          "i"
-        );
-      }
-      if (searchConditions.ingredient.exclude) {
+    if (ingredients) {
+      if (ingredients.include?.length) {
         matchConditions.RAWMTRL_NM = {
-          $not: new RegExp(searchConditions.ingredient.exclude, "i"),
+          $all: ingredients.include.map((term) => new RegExp(term, "i")),
+        };
+      }
+      if (ingredients.exclude?.length) {
+        matchConditions.RAWMTRL_NM = {
+          ...matchConditions.RAWMTRL_NM,
+          $not: new RegExp(ingredients.exclude.join("|"), "i"),
         };
       }
     }
