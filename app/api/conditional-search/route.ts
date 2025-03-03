@@ -32,11 +32,11 @@ interface SearchConditions {
 
 export async function POST(req: Request) {
   try {
-    const { currentProduct, searchConditions } = await req.json();
+    const { category, searchConditions } = await req.json();
 
-    if (!currentProduct || !searchConditions) {
+    if (!category || !searchConditions) {
       return NextResponse.json(
-        { error: "현재 제품 정보와 검색 조건이 필요합니다." },
+        { error: "카테고리와 검색 조건이 필요합니다." },
         { status: 400 }
       );
     }
@@ -47,10 +47,10 @@ export async function POST(req: Request) {
 
     // 검색 조건 구성
     const matchConditions: Record<string, any> = {
-      CATEGORY2: currentProduct.CATEGORY2,
+      CATEGORY2: category,
     };
 
-    // 숫자 필드 조건 추가 (가격과 영양소를 한번에 처리)
+    // 숫자 필드 조건 추가
     if (searchConditions.numeric) {
       searchConditions.numeric.forEach(({ field, condition }) => {
         matchConditions[field] =
@@ -94,7 +94,6 @@ export async function POST(req: Request) {
           T_FAT: 1,
           S_FAT: 1,
           CHOL: 1,
-          CATEGORY1: 1,
           CATEGORY2: 1,
           RAWMTRL_NM: 1,
         },
