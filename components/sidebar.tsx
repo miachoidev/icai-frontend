@@ -3,7 +3,6 @@
 import { ChevronDown, Home, Pill, Star, HelpCircle,Atom } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
 const sidebarNavItems = [
@@ -38,7 +37,7 @@ const sidebarNavItems = [
     icon: Pill,
     href: "",
     children: [
-      { title: "닭가슴살", href: "/search/chiken" },
+      { title: "닭가슴살", href: "/search/chicken" },
       { title: "쉐이크", href: "/search/shake" },
       { title: "곤약", href: "/search/gonyak" },
       { title: "프로틴", href: "/search/protein" },
@@ -64,17 +63,16 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <nav className="hidden border-r bg-background lg:block">
-      <ScrollArea className="h-[calc(100vh-3.5rem)] w-64 py-6">
-        <div className="space-y-4 py-4">
-          <div className="px-3 py-2">
-            <div className="space-y-1">
+    <nav className="sticky top-0 h-full">
+        <div className="w-80 space-y-4 py-4">
+          <div className="px-3 py-4">
+            <div className="space-y-2 ">
               {sidebarNavItems.map((item) => (
                 <div key={item.href}>
                   <Link href={item.href}>
                     <span
                       className={cn(
-                        "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                        "group flex items-center rounded-md px-3 py-2 text-lg font-medium hover:bg-accent hover:text-accent-foreground",
                         pathname === item.href ? "bg-accent" : "transparent",
                       )}
                     >
@@ -89,7 +87,7 @@ export default function Sidebar() {
                         <Link key={child.href} href={child.href}>
                           <span
                             className={cn(
-                              "block rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                              "block rounded-md px-3 py-2 text-m font-medium hover:bg-accent hover:text-accent-foreground",
                               pathname === child.href ? "bg-accent" : "transparent",
                             )}
                           >
@@ -104,7 +102,6 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-      </ScrollArea>
     </nav>
   )
 }

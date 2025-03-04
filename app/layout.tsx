@@ -5,8 +5,6 @@ import "./globals.css";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Pick & Chat",
   description: "Pick the products and Chat",
@@ -20,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 p-4 lg:p-6">{children}</main>
+      <body className="flex px-8">
+        <Sidebar />
+        <div className="w-full px-16">
+          <Header />
+          <main className="p-4 lg:p-6">{children}</main>
         </div>
       </body>
     </html>

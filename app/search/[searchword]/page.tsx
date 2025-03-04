@@ -2,7 +2,8 @@
 
 import { usePathname } from "next/navigation"
 
-import VectorList from "@/components/CategorySearch"
+import CategoryList from "@/components/CategorySearch"
+import { useEffect, useState } from "react";
 
 export default function SearchPage() {
   // In a real app, fetch product data based on params.id
@@ -10,23 +11,44 @@ export default function SearchPage() {
   const path = usePathname()
   const searchword: any = path.match(/\/search\/(.+)/);
 
-  // console.log(searchword[1])
+  const [category, setCategory] = useState('')
 
-  const product = {
-    id: 1,
-    name: "살펜다 혈당컷 다이어트",
-    brand: "한국건강",
-    rating: 4.51,
-    reviews: 139,
-    image: "/placeholder.svg",
-    tags: ["단백질 대사", "체지방 감소"],
-    description: "만족 수 있는 브랜드 스토어에서",
+  const matchCategory = (x: string) => {
+    switch(x) {
+      case 'diet':
+        return '다이어트'
+      case 'slimming':
+        return '슬리밍'
+      case 'slim':
+        return '슬림'
+      case 'kcal':
+        return '칼로리'
+      case 'chicken':
+        return '닭가슴살'
+      case 'shake':
+        return '쉐이크'
+      case 'gonyak':
+        return '곤약'
+      case 'protein':
+        return '프로틴'
+      case 'arginine':
+        return '아르기닌'
+      case 'enzyme':
+        return '효소'
+      default:
+        return '다이어트'
+    }
   }
 
+  useEffect(() => {
+    const category2 = matchCategory(searchword[1])
+    setCategory(category2)
+  }, [path])
+
   return (
-    <div className="container mx-auto px-4">
-      <div className="grid gap-8 lg:grid-cols-2">
-       <VectorList searchword={searchword[1]} />
+    <div className="space-y-6">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+       <CategoryList searchword={category} />
       </div>
     </div>
   )

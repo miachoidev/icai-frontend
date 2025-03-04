@@ -79,7 +79,7 @@ class MongoDBClient {
     return results;
   }
 
-  async getRecords(limit: number, afterId?: ObjectId): Promise<Product[]> {
+  async getRecords(limit: number, afterId?: ObjectId, category2?: string): Promise<Product[]> {
     const collection = await this.getCollection(
       "sample_jinho",
       "food_collection2"
@@ -87,6 +87,7 @@ class MongoDBClient {
     const results = await collection
       .find<Product>({
         ...(afterId ? { _id: { $gt: afterId } } : {}),
+        ...(category2 ? {CATEGORY2: category2} : {})
       })
       .sort({ _id: 1 })
       .limit(limit)
