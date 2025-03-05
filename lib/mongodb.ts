@@ -19,9 +19,16 @@ const productImages = {
   '효소': ['효소1.JPG', '효소2.JPG', '효소3.JPG', '효소4.JPG', '효소5.JPG', '효소6.JPG', '효소7.JPG', '효소8.jpg', '효소9.JPG', '효소10.JPG'],
 }
 
-function imgByCategory2(category: string) {
+const IMAGE_MAP: {[k: string]: string} = {}
+
+function imgByCategory2(product: string, category: string) {
+  if (IMAGE_MAP[product]) {
+    return IMAGE_MAP[product]
+  }
   const name =  productImages[category as keyof typeof productImages][Math.floor(Math.random() * productImages[category as keyof typeof productImages].length)]
-  return `/img/${name}`
+  const image =  `/img/${name}`
+  IMAGE_MAP[product] = image
+  return image
 }
 
 class MongoDBClient {
@@ -93,7 +100,7 @@ class MongoDBClient {
       .limit(limit)
       .toArray();
     results.forEach(i => {
-      i.image = imgByCategory2(i.CATEGORY2)
+      i.image = imgByCategory2(i.PRODUCT, i.CATEGORY2)
     })
     return results;
   }
@@ -105,7 +112,7 @@ class MongoDBClient {
     );
     const result = await collection.findOne<Product>({ _id: new ObjectId(id) });
     if (result) {
-      result.image = imgByCategory2(result.CATEGORY2)
+      result.image = imgByCategory2(result.PRODUCT, result.CATEGORY2)
     }
     return result;
   }
