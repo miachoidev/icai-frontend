@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 import { useEffect, useState } from "react";
 import HeaderSearch from "@/components/HeaderSearch";
@@ -8,14 +8,16 @@ import HeaderSearch from "@/components/HeaderSearch";
 export default function SearchPage() {
   // In a real app, fetch product data based on params.id
 
-  const path = usePathname()
-  const searchword: any = path.match(/\/search\/(.+)/);
+  const searchParams = useSearchParams();
+  const searchword = searchParams.get("searchword"); 
 
   const [keyword, setKeyword] = useState('')
 
+  // console.log(searchword)
+
   useEffect(() => {
-    setKeyword(searchword[1])
-  }, [path])
+    if (searchword) setKeyword(searchword)
+  }, [searchword])
 
   return (
     <div className="space-y-6">

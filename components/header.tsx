@@ -9,9 +9,20 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import MobileNav from "./mobile-nav"
+import { useRouter } from "next/navigation"
 
 export default function Header() {
+  const router = useRouter()
   const [isSearchFocused, setIsSearchFocused] = useState(false)
+
+  const [value, setValue] = useState("");
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // 기본 동작 방지 (폼 제출 방지 등)
+      router.push(`/search?searchword=${value}`)
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -42,10 +53,13 @@ export default function Header() {
               <Search className="absolute left-2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search supplements..."
+                placeholder="제품을 검색해보세요"
                 className="pl-8"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
+                onKeyDown={(e) => handleKeyDown(e)}
               />
             </div>
           </div>
