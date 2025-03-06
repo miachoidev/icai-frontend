@@ -64,14 +64,14 @@ export default function ProductDetailLayout({
       {isProductDetail && productInfo && (
         <>
           <DifyChatButton
-            chatbotId="MvYdgLCzHJaTrUkk"
+            chatbotId="RH8geiNXXfGgw2Ef"
             imagePath="/suncity.jpg"
             imageAlt="일반 문의"
             tooltipText="키토 전문가 썬시티5스타에게 물어보세요"
             inputs={getProductInfoString(productInfo)}
           />
           <DifyChatButton
-            chatbotId="3c6CkWF8na7GgWX8"
+            chatbotId="Bd49DJ8INnOoGf8R"
             imagePath="/fit.jpeg"
             imageAlt="상품 문의"
             tooltipText="헬스/다이어트 전문가 핏블리에게 물어보세요"

@@ -46,7 +46,8 @@ const DifyChatModal = ({
 
     // console.log("encodedValue:", encodedValue);
 
-    const iframeUrl = `https://065e-58-230-178-34.ngrok-free.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
+    // const iframeUrl = `https://065e-58-230-178-34.ngrok-free.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
+    const iframeUrl = `https://udify.app/chatbot/${chatbotId}?product=${urlSafeEncodedValue}`;
     console.log("final URL:", iframeUrl);
 
     return (
@@ -132,7 +133,7 @@ export const DifyChatButton = ({
         style={{
           position: "fixed",
           right: "30px",
-          bottom: chatbotId === "3c6CkWF8na7GgWX8" ? "30px" : "150px",
+          bottom: chatbotId === "Bd49DJ8INnOoGf8R" ? "30px" : "150px",
           display: "flex",
           alignItems: "center",
           gap: "10px",
