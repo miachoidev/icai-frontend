@@ -116,20 +116,6 @@ class MongoDBClient {
     }
     return result;
   }
-
-  async getProducts(limit: number, searchword: string): Promise<Product[] | null> {
-    const collection = await this.getCollection(
-      "sample_jinho",
-      "food_collection2"
-    );
-    const results = await collection.find<Product>({ PRODUCT: {$regex: `${searchword}`} }).limit(limit).toArray();
-    if (results) {
-      results.forEach(i => {
-        i.image = imgByCategory2(i.PRODUCT, i.CATEGORY2)
-      })
-    }
-    return results;
-  }
 }
 
 export const mongoClient = new MongoDBClient();
