@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { ChevronDown, Home, Pill, Star, HelpCircle,Atom } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { ChevronDown, Home, Pill, Star, HelpCircle, Atom } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const sidebarNavItems = [
   {
@@ -57,10 +57,11 @@ const sidebarNavItems = [
   //   icon: HelpCircle,
   //   href: "/faq",
   // },
-]
+];
+
 
 export default function Sidebar() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <nav className="sticky top-0 h-full">
@@ -102,7 +103,7 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
+      </div>
     </nav>
-  )
+  );
 }
-

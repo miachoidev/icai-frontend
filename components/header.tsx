@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Menu, Search } from "lucide-react"
 import Image from "next/image"
@@ -39,21 +39,28 @@ export default function Header() {
           </SheetContent>
         </Sheet>
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <Image src="/placeholder.svg" alt="Pillyze Logo" width={32} height={32} />
-          <span className="hidden text-3xl font-bold sm:inline-block">Pick & Chat</span>
+          {/* <Image
+            src="/placeholder.svg"
+            alt="Pillyze Logo"
+            width={32}
+            height={32}
+          /> */}
+          <span className="hidden text-3xl font-bold sm:inline-block">
+            PikTok
+          </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div
             className={cn(
               "flex max-w-[600px] flex-1 items-center space-x-2 transition-all",
-              isSearchFocused ? "sm:max-w-[600px]" : "sm:max-w-[400px]",
+              isSearchFocused ? "sm:max-w-[600px]" : "sm:max-w-[400px]"
             )}
           >
             <div className="relative flex flex-1 items-center">
               <Search className="absolute left-2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="제품을 검색해보세요"
+                placeholder="어떤 다이어트 식품을 찾으시나요?"
                 className="pl-8"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
@@ -69,6 +76,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
-

@@ -132,7 +132,7 @@ export const DifyChatButton = ({
         style={{
           position: "fixed",
           right: "30px",
-          bottom: chatbotId === "sOdLG3fHDRrpvfzR" ? "30px" : "150px",
+          bottom: chatbotId === "3c6CkWF8na7GgWX8" ? "30px" : "150px",
           display: "flex",
           alignItems: "center",
           gap: "10px",

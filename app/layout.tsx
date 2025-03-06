@@ -6,7 +6,7 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 
 export const metadata: Metadata = {
-  title: "Pick & Chat",
+  title: "PikTok",
   description: "Pick the products and Chat",
   generator: "v1.dev",
 };
