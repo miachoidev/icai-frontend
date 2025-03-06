@@ -11,6 +11,7 @@ import Image from "next/image";
 async function getCategory(keyword: string) {
   // const limit = 20
   const query = `/api/category?category2=${keyword}`;
+	console.log(query);
   const response = await fetch(query);
   const products = await response.json();
   return products;
@@ -22,6 +23,7 @@ export default function CategoryList({ searchword }: { searchword: string }) {
 
   const loadProducts = async () => {
     const products = await getCategory(searchword);
+		console.log(products);
     setProducts(products);
   };
 

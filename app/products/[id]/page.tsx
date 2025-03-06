@@ -6,11 +6,14 @@ import { useState, useEffect, useContext } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { ProductContext } from "./layout";
+import { useSearchParams } from "next/navigation";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const { setProductInfo } = useContext(ProductContext);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const imageUrl = searchParams?.get('image') || null;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -45,7 +48,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <div className="flex gap-6">
             {/* 왼쪽 이미지 */}
             <div className="w-40 h-40 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Image src={product.image} alt={product.PRODUCT} width={120} height={120} className="object-cover" />
+                <Image src={imageUrl || product.image} alt={product.PRODUCT} width={120} height={120} className="object-cover" />
             </div>
             {/* 오른쪽 제품 정보 */}
             <div className="flex-grow">
