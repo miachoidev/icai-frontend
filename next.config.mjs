@@ -21,6 +21,28 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // 클라이언트 사이드에서 사용하지 않는 Node.js 모듈에 대한 폴리필 설정
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        net: false,
+        tls: false,
+        fs: false,
+        dns: false,
+        child_process: false,
+        os: false,
+        path: false,
+        stream: false,
+        http: false,
+        https: false,
+        zlib: false,
+        crypto: false,
+        util: false
+      };
+    }
+    return config;
+  },
 }
 
 mergeConfig(nextConfig, userConfig)

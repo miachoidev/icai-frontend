@@ -45,7 +45,7 @@ export default function Header() {
               isSearchFocused ? "sm:max-w-[600px]" : "sm:max-w-[400px]"
             )}
           >
-            <div className="relative flex flex-1 items-center">
+            {/* <div className="relative flex flex-1 items-center">
               <Search className="absolute left-2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -54,7 +54,7 @@ export default function Header() {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
               />
-            </div>
+            </div> */}
           </div>
           {/* <Button variant="default" className="hidden sm:flex">
             App Download
