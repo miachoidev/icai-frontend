@@ -10,7 +10,8 @@ import Image from "next/image";
 
 async function getCategory(keyword: string) {
   // const limit = 20
-  const query = `/api/category?category2=${keyword}`;
+  // const query = `/api/category?category2=${keyword}`;
+  const query = `/api/recent-products?category2=${keyword}`;
 	console.log(query);
   const response = await fetch(query);
   const products = await response.json();

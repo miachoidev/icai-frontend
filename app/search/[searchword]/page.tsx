@@ -15,6 +15,10 @@ export default function SearchPage() {
 
   const matchCategory = (x: string) => {
     switch(x) {
+			case 'innerbeauty':
+				return '슬림'
+			case 'lowcalorie':
+				return '칼로리'
       case 'diet':
         return '다이어트'
       case 'slimming':
@@ -37,6 +41,7 @@ export default function SearchPage() {
         return '효소'
       default:
         return '다이어트'
+			
     }
   }
 

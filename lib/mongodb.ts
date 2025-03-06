@@ -106,21 +106,76 @@ class MongoDBClient {
     return results;
   }
 
-  async getRecentRecords(limit: number, afterId?: ObjectId, category2?: string, productPattern?: string): Promise<Product[]> {
+  async getRecentRecords(limit: number, afterId?: ObjectId, category2?: string, productPattern?: string[], excludePatterns?: string[]): Promise<Product[]> {
     const collection = await this.getCollection(
       "sample_jinho",
       "food_collection2"
     );
 
+    // 쿼리 조건 구성
+    const query: any = {
+      ...(afterId ? { _id: { $gt: afterId } } : {}),
+      ...(category2 ? {CATEGORY2: category2} : {}),
+      REGIST_DT: { $gt: 20240000 },
+			TYPE: { $not: { $regex: "건강기능식품", $options: 'i' } }
+    };
+
+    // PRODUCT 필드에 대한 조건 처리
+    if (productPattern && productPattern.length > 0 && excludePatterns && excludePatterns.length > 0) {
+      // 포함 패턴 리스트와 제외 패턴 리스트가 모두 있는 경우
+      const excludeConditions = excludePatterns.map(pattern => ({ 
+        PRODUCT: { $not: { $regex: pattern, $options: 'i' } } 
+      }));
+      
+      // 포함 패턴 리스트 중 하나라도 일치하는 조건 (OR 조건)
+      const includeCondition = {
+        $or: productPattern.map(pattern => ({
+          PRODUCT: { $regex: pattern, $options: 'i' }
+        }))
+      };
+      
+      query.$and = [
+        includeCondition,
+        ...excludeConditions
+      ];
+    } else if (productPattern && productPattern.length > 0) {
+      // 포함 패턴 리스트만 있는 경우 (OR 조건)
+      query.$or = productPattern.map(pattern => ({
+        PRODUCT: { $regex: pattern, $options: 'i' }
+      }));
+    } else if (excludePatterns && excludePatterns.length > 0) {
+      // 제외 패턴만 있는 경우
+      const excludeConditions = excludePatterns.map(pattern => ({ 
+        PRODUCT: { $not: { $regex: pattern, $options: 'i' } } 
+      }));
+      
+      query.$and = excludeConditions;
+    }
+
     // REGIST_DT가 숫자 형태이므로 20240000보다 큰 값을 찾음
     const results = await collection
-      .find<Product>({
-        ...(afterId ? { _id: { $gt: afterId } } : {}),
-        ...(category2 ? {CATEGORY2: category2} : {}),
-        ...(productPattern ? {PRODUCT: { $regex: productPattern, $options: 'i' }} : {}),
-        REGIST_DT: { $gt: 20240000 } // 
-      })
+      .find<Product>(query)
       .sort({ REGIST_DT: -1 }) // REGIST_DT 기준으로 내림차순 정렬 (큰 값이 먼저 나오도록)
+      .project<Product>({ 
+				embedded: 0, 
+				TEXT: 0,
+				// KCAL: 0,
+				// CARBO: 0,
+				// PROT: 0,
+				// FAT: 0,
+				// SO: 0,
+				// price: 0,
+				// RAWMTRL_NM: 0,
+				// T_FAT: 0,
+				// SUGAR: 0,
+				// S_FAT: 0,
+				// CHOL: 0,
+				// ENTRPS: 0,
+				
+
+				
+
+			 }) // embedded와 TEXT 필드 제외
       .limit(limit)
       .toArray();
     
