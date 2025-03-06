@@ -92,40 +92,42 @@ export async function GET(request: Request) {
 	return NextResponse.json(list);
 }
 
-// export async function POST(request: Request) {
-//   try {
-//     // 요청 본문에서 파라미터 가져오기
-//     const body = await request.json();
+export async function POST(request: Request) {
+  try {
+    // 요청 본문에서 파라미터 가져오기
+    const body = await request.json();
     
-//     const limit = body.limit || 20;
-//     const afterId = body.afterId;
-//     const category2 = body.category2;
-//     const productPattern = body.productPattern;
-//     const excludePatterns = body.excludePatterns;
+    const limit = body.limit || 20;
+    const afterId = body.afterId;
+    const category2 = body.category2;
+    const productPattern = body.productPattern;
+    const excludePatterns = body.excludePatterns;
+		const productIds = body.productIds;
     
-//     console.log("API 호출: /api/recent-products (POST)");
-//     console.log("파라미터:", { limit, afterId, category2, productPattern, excludePatterns });
+    console.log("API 호출: /api/recent-products (POST)");
+    console.log("파라미터:", { limit, afterId, category2, productPattern, excludePatterns, productIds });
     
-//     const products = await mongoClient.getRecentRecords(
-//       limit, 
-//       afterId ? new ObjectId(afterId) : undefined,
-//       category2,
-//       productPattern,
-//       excludePatterns // 이미 배열로 전달됨
-//     );
+    const products = await mongoClient.getRecentRecords(
+      limit, 
+      afterId ? new ObjectId(afterId) : undefined,
+      category2,
+      productPattern,
+      excludePatterns,
+			productIds
+    );
     
-//     console.log("결과 개수:", products.length);
+    console.log("결과 개수:", products.length);
     
-//     return NextResponse.json({
-//       success: true,
-//       count: products.length,
-//       products: products
-//     });
-//   } catch (error) {
-//     console.error("API 오류:", error);
-//     return NextResponse.json({
-//       success: false,
-//       error: error instanceof Error ? error.message : String(error)
-//     }, { status: 500 });
-//   }
-// } 
+    return NextResponse.json({
+      success: true,
+      count: products.length,
+      products: products
+    });
+  } catch (error) {
+    console.error("API 오류:", error);
+    return NextResponse.json({
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    }, { status: 500 });
+  }
+} 

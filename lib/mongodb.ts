@@ -106,7 +106,7 @@ class MongoDBClient {
     return results;
   }
 
-  async getRecentRecords(limit: number, afterId?: ObjectId, category2?: string, productPattern?: string[], excludePatterns?: string[]): Promise<Product[]> {
+  async getRecentRecords(limit: number, afterId?: ObjectId, category2?: string, productPattern?: string[], excludePatterns?: string[], productIds?: string[]): Promise<Product[]> {
     const collection = await this.getCollection(
       "sample_jinho",
       "food_collection2"
@@ -120,8 +120,19 @@ class MongoDBClient {
 			TYPE: { $not: { $regex: "건강기능식품", $options: 'i' } }
     };
 
-    // PRODUCT 필드에 대한 조건 처리
-    if (productPattern && productPattern.length > 0 && excludePatterns && excludePatterns.length > 0) {
+    // productIds가 있는 경우 완전 일치 OR 조건 추가 (_id 필드 기준)
+    if (productIds && productIds.length > 0) {
+      try {
+        // 문자열 ID를 ObjectId로 변환
+        const objectIds = productIds.map(id => new ObjectId(id));
+        query._id = { $in: objectIds }; // 완전 일치 OR 조건
+      } catch (error) {
+        console.error("ObjectId 변환 오류:", error);
+        // 오류가 발생해도 계속 진행 (잘못된 ID는 무시)
+      }
+    }
+    // PRODUCT 필드에 대한 조건 처리 (productIds가 없는 경우에만 적용)
+    else if (productPattern && productPattern.length > 0 && excludePatterns && excludePatterns.length > 0) {
       // 포함 패턴 리스트와 제외 패턴 리스트가 모두 있는 경우
       const excludeConditions = excludePatterns.map(pattern => ({ 
         PRODUCT: { $not: { $regex: pattern, $options: 'i' } } 
