@@ -94,14 +94,49 @@ class MongoDBClient {
     const results = await collection
       .find<Product>({
         ...(afterId ? { _id: { $gt: afterId } } : {}),
-        ...(category2 ? {CATEGORY2: category2} : {})
+        ...(category2 ? {CATEGORY2: category2} : {}),
+				REGIST_DT: { $gt: 20240000 } // 2024년 이후 데이터만 조회
       })
       .sort({ _id: 1 })
       .limit(limit)
       .toArray();
     results.forEach(i => {
-      i.image = imgByCategory2(i.PRODUCT, i.CATEGORY2)
+      i.image = imgByCategory2(i.PRODUCT, i.CATEGORY2 || "")
     })
+    return results;
+  }
+
+  async getRecentRecords(limit: number, afterId?: ObjectId, category2?: string, productPattern?: string): Promise<Product[]> {
+    const collection = await this.getCollection(
+      "sample_jinho",
+      "food_collection2"
+    );
+
+    // REGIST_DT가 숫자 형태이므로 20240000보다 큰 값을 찾음
+    const results = await collection
+      .find<Product>({
+        ...(afterId ? { _id: { $gt: afterId } } : {}),
+        ...(category2 ? {CATEGORY2: category2} : {}),
+        ...(productPattern ? {PRODUCT: { $regex: productPattern, $options: 'i' }} : {}),
+        REGIST_DT: { $gt: 20240000 } // 
+      })
+      .sort({ REGIST_DT: -1 }) // REGIST_DT 기준으로 내림차순 정렬 (큰 값이 먼저 나오도록)
+      .limit(limit)
+      .toArray();
+    
+    console.log("MongoDB 쿼리 결과:", {
+      count: results.length,
+      firstItem: results.length > 0 ? {
+        _id: results[0]._id.toString(),
+        PRODUCT: results[0].PRODUCT,
+        REGIST_DT: (results[0] as any).REGIST_DT
+      } : null
+    });
+    
+    results.forEach(i => {
+      i.image = imgByCategory2(i.PRODUCT, i.CATEGORY2 || "")
+    });
+    
     return results;
   }
 
@@ -112,7 +147,7 @@ class MongoDBClient {
     );
     const result = await collection.findOne<Product>({ _id: new ObjectId(id) });
     if (result) {
-      result.image = imgByCategory2(result.PRODUCT, result.CATEGORY2)
+      result.image = imgByCategory2(result.PRODUCT, result.CATEGORY2 || "")
     }
     return result;
   }
