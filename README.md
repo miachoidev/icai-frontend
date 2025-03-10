@@ -15,7 +15,7 @@
 - 네이버 서비스 비교 내용
 
 ## 서비스 아키텍처
-
+![Image](https://github.com/user-attachments/assets/baff7650-6ecc-428d-bdc6-905d91430fcf)
 
 
 ### AI Agent
